@@ -18,7 +18,7 @@ namespace Rocket.Web.Controllers
         [Route("all")]
         [SwaggerResponseRemoveDefaults]
         [SwaggerResponse(HttpStatusCode.OK)]
-        public IHttpActionResult GetAllRoles()
+        public IHttpActionResult GetAllRoles() // TODO: roles?
         {
             var result = _logService.GetLogInfo();
             return Ok(result);

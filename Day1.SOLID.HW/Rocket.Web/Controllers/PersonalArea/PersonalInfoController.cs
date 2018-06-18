@@ -54,7 +54,7 @@ namespace Rocket.Web.Controllers.PersonalArea
         [SwaggerResponseRemoveDefaults]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Password is not valid", typeof(string))]
         [Route("password")]
-        public IHttpActionResult UpdateUserPassword(string password, string passwordConfirm)
+        public IHttpActionResult UpdateUserPassword(string password, string passwordConfirm) //  TODO: где старый пароль?? если это ресет пароля то нужен токен из письма
         {
             if (string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(passwordConfirm))
             {

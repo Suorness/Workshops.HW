@@ -1,4 +1,6 @@
-﻿namespace Rocket.BL.Common.Models.PersonalArea
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Rocket.BL.Common.Models.PersonalArea
 {
     public class Email
     {
@@ -10,6 +12,7 @@
         /// <summary>
         /// Имя e-mail адреса.
         /// </summary>
-        public string Name { get; set; }
+       // [EmailAddress] //  TODO: add this
+        public string Name { get; set; }  // //  TODO: name?
     }
 }

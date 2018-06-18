@@ -12,7 +12,7 @@ namespace Rocket.BL.Services.PersonalArea
     public class ChangeEmailManagerService : BaseService, IEmailManager
     {
         private string _pattern = @"^(?("")(""[^""]+?""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
-                @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9]{2,17}))$";
+                @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9]{2,17}))$"; //  TODO: remove
 
         public ChangeEmailManagerService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
@@ -31,9 +31,9 @@ namespace Rocket.BL.Services.PersonalArea
             {
                 throw new ValidationException(Resources.EmailDuplicate);
             }
-            if (!Regex.IsMatch(email.Name, _pattern, RegexOptions.IgnoreCase))
+            if (!Regex.IsMatch(email.Name, _pattern, RegexOptions.IgnoreCase)) //  TODO: change to attribute
                 throw new ValidationException(Resources.WrongEmailFormat);
-             var emails = new DbEmail() { Name = email.Name, DbUserProfileId = id };
+             var emails = new DbEmail() { Name = email.Name, DbUserProfileId = id }; //  TODO: to map
             _unitOfWork.EmailRepository.Insert(emails);
             _unitOfWork.SaveChanges();
             return emails.Id;

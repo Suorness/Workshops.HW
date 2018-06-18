@@ -34,17 +34,17 @@ namespace Rocket.BL.Services.PersonalArea
         {
             var modelUser = _unitOfWork.UserAuthorisedRepository.Get(f => f.DbUser_Id == id).FirstOrDefault()
                ?? throw new ValidationException(Resources.EmptyModel);
-            if (_unitOfWork.MusicGenreRepository.Get(f => f.Name.ToUpper() == genre.ToUpper()).FirstOrDefault() == null)
+            if (_unitOfWork.MusicGenreRepository.Get(f => f.Name.ToUpper() == genre.ToUpper()).FirstOrDefault() == null)  ////  TODO:remove dubl
             {
                 throw new ValidationException(Resources.GenreWrongName);
             }
 
-            if (modelUser.MusicGenres.Where(f => f.Name.ToUpper() == genre.ToUpper()).FirstOrDefault() != null)
+            if (modelUser.MusicGenres.Where(f => f.Name.ToUpper() == genre.ToUpper()).FirstOrDefault() != null) //  TODO: ??
             {
                 throw new ValidationException(Resources.GenreDuplicate);
             }
 
-            modelUser.MusicGenres.Add(_unitOfWork.MusicGenreRepository.Get(f => f.Name.ToUpper() == genre.ToUpper()).FirstOrDefault());
+            modelUser.MusicGenres.Add(_unitOfWork.MusicGenreRepository.Get(f => f.Name.ToUpper() == genre.ToUpper()).FirstOrDefault());  //  TODO: to value
             _unitOfWork.UserAuthorisedRepository.Update(modelUser);
             _unitOfWork.SaveChanges();
         }

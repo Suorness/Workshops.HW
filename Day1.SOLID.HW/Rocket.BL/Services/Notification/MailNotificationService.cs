@@ -29,7 +29,7 @@ namespace Rocket.BL.Services.Notification
     /// <summary>
     /// Сервис email нотификации
     /// </summary>
-    public class MailNotificationService : BaseService, IMailNotificationService
+    public class MailNotificationService : BaseService, IMailNotificationService // //  TODO: templatebuilder service; transportservice
     {
         private readonly ILog _logger;
         private IEnumerable<IMailTransport> _transport;
@@ -68,7 +68,7 @@ namespace Rocket.BL.Services.Notification
                 throw new ArgumentNullException(nameof(entities));
             }
 
-            foreach (var entity in entities)
+            foreach (var entity in entities) 
             {
                 if (entity is DbMusic music)
                 {
@@ -104,20 +104,21 @@ namespace Rocket.BL.Services.Notification
             try
             {
                 var user = _unitOfWork.UserAuthorisedRepository.Get(
-                x => x.DbUser_Id == id, null, "DbUser").First();
+                x => x.DbUser_Id == id, null, "DbUser").First();  // TODO: use nameof(DbUser), create method GetUser in UOW UserAuthorisedRepository
                 var billing = Mapper.Map<BillingNotification>(user);
                 billing.Sum = sum;
                 billing.Currency = currency;
                 string body;
+
                 if (type == BillingType.Donate)
                 {
                     var template = _unitOfWork.EmailTemplateRepository.GetById(
-                        Convert.ToInt32(Resources.Donate)).Body;
-                    body = Engine.Razor.RunCompile(template, Resources.Donate, null, new { Donate = billing });
+                        Convert.ToInt32(Resources.Donate)).Body;  //  TODO: (int)BillingType.Donate
+                    body = Engine.Razor.RunCompile(template, Resources.Donate, null, new { Donate = billing }); //  TODO: (int)BillingType.Donate
                 }
                 else
                 {
-                    var template = _unitOfWork.EmailTemplateRepository.GetById(
+                    var template = _unitOfWork.EmailTemplateRepository.GetById(   //  TODO: to param
                         Convert.ToInt32(Resources.Premium)).Body;
                     body = Engine.Razor.RunCompile(
                         template,
@@ -128,26 +129,6 @@ namespace Rocket.BL.Services.Notification
 
                 var message = CreateMessage(billing.Receiver, body);
                 await SendEmailAsync(_transport.ElementAt(0), new[] { message });
-            }
-            catch (EntityException exception)
-            {
-                _logger.Error(exception.Message);
-            }
-            catch (DbException exception)
-            {
-                _logger.Error(exception.Message);
-            }
-            catch (AutoMapperConfigurationException exception)
-            {
-                _logger.Error(exception.Message);
-            }
-            catch (AutoMapperMappingException exception)
-            {
-                _logger.Error(exception.Message);
-            }
-            catch (NullReferenceException exception)
-            {
-                _logger.Error(exception.Message);
             }
             catch (Exception exception)
             {
@@ -192,14 +173,6 @@ namespace Rocket.BL.Services.Notification
                     new { Donate = billing });
                 var messageToSend = CreateMessage(billing.Receiver, body);
                 await SendEmailAsync(_transport.ElementAt(0), new[] { messageToSend });
-            }
-            catch (EntityException exception)
-            {
-                _logger.Error(exception.Message);
-            }
-            catch (DbException exception)
-            {
-                _logger.Error(exception.Message);
             }
             catch (Exception exception)
             {
@@ -252,14 +225,6 @@ namespace Rocket.BL.Services.Notification
                     new { Confirmation = confirmation });
                 var messageToSend = CreateMessage(confirmation.Receiver, body);
                 await SendEmailAsync(_transport.ElementAt(0), new[] { messageToSend });
-            }
-            catch (EntityException exception)
-            {
-                _logger.Error(exception.Message);
-            }
-            catch (DbException exception)
-            {
-                _logger.Error(exception.Message);
             }
             catch (Exception exception)
             {
@@ -370,26 +335,6 @@ namespace Rocket.BL.Services.Notification
 
                 await Task.WhenAll(tasks).ConfigureAwait(false);
             }
-            catch (EntityException exception)
-            {
-                _logger.Error(exception.Message);
-            }
-            catch (DbException exception)
-            {
-                _logger.Error(exception.Message);
-            }
-            catch (AutoMapperConfigurationException exception)
-            {
-                _logger.Error(exception.Message);
-            }
-            catch (AutoMapperMappingException exception)
-            {
-                _logger.Error(exception.Message);
-            }
-            catch (NullReferenceException exception)
-            {
-                _logger.Error(exception.Message);
-            }
             catch (Exception exception)
             {
                 _logger.Error(exception.Message);
@@ -432,26 +377,6 @@ namespace Rocket.BL.Services.Notification
                 }
 
                 await Task.WhenAll(tasks).ConfigureAwait(false);
-            }
-            catch (EntityException exception)
-            {
-                _logger.Error(exception.Message);
-            }
-            catch (DbException exception)
-            {
-                _logger.Error(exception.Message);
-            }
-            catch (AutoMapperConfigurationException exception)
-            {
-                _logger.Error(exception.Message);
-            }
-            catch (AutoMapperMappingException exception)
-            {
-                _logger.Error(exception.Message);
-            }
-            catch (NullReferenceException exception)
-            {
-                _logger.Error(exception.Message);
             }
             catch (Exception exception)
             {
@@ -527,14 +452,6 @@ namespace Rocket.BL.Services.Notification
 
                     await transport.DisconnectAsync(true).ConfigureAwait(false);
                 }
-            }
-            catch (SmtpProtocolException exception)
-            {
-                _logger.Error(exception.Message);
-            }
-            catch (AuthenticationException exception)
-            {
-                _logger.Error(exception.Message);
             }
             catch (Exception exception)
             {

@@ -2,6 +2,7 @@
 
 namespace Rocket.BL.Common.Models.PersonalArea
 {
+    // TODO: Использовать валидационную модель
     public class Email
     {
         /// <summary>
@@ -12,7 +13,7 @@ namespace Rocket.BL.Common.Models.PersonalArea
         /// <summary>
         /// Имя e-mail адреса.
         /// </summary>
-       // [EmailAddress] //  TODO: add this
+       // [EmailAddress] 
         public string Name { get; set; }  // //  TODO: name?
     }
 }

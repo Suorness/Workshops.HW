@@ -30,6 +30,7 @@ namespace Rocket.BL.Services.PersonalArea
         /// <returns>Модель авторизованного пользователя.</returns>
         public UserProfile GetUserData(string id)
         {
+            // TODO: remove and create method in userAR
             return Mapper.Map<UserProfile>(_unitOfWork.UserAuthorisedRepository.Get(
                     f => f.DbUser_Id == id,
                     includeProperties: $"{nameof(DbUser)}")

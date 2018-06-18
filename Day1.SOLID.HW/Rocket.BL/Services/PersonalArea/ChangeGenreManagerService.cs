@@ -34,10 +34,12 @@ namespace Rocket.BL.Services.PersonalArea
         {
             var modelUser = _unitOfWork.UserAuthorisedRepository.Get(f => f.DbUser_Id == id).FirstOrDefault()
                ?? throw new ValidationException(Resources.EmptyModel);
-            if (_unitOfWork.MusicGenreRepository.Get(f => f.Name.ToUpper() == genre.ToUpper()).FirstOrDefault() == null)  ////  TODO:remove dubl
+            if (_unitOfWork.MusicGenreRepository.Get(f => f.Name.ToUpper() == genre.ToUpper()).FirstOrDefault() == null) 
             {
                 throw new ValidationException(Resources.GenreWrongName);
             }
+            // TODO: Двойное обращание к базе данных 
+            // TODO: Создать метод для поиска в uow
 
             if (modelUser.MusicGenres.Where(f => f.Name.ToUpper() == genre.ToUpper()).FirstOrDefault() != null) //  TODO: ??
             {

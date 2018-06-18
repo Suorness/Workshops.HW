@@ -211,5 +211,7 @@ namespace Rocket.BL.Services.ReleaseList
                 }));
             return pageInfo;
         }
+
+        //TODO: Переместить методы GetPageInfoByDate GetNewPageInfoByDate в отдельный сервис
     }
 }

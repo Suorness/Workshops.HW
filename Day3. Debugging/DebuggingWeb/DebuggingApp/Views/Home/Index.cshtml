@@ -1,0 +1,30 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Список машин</title>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td><p>Название машины</p></td>
+                <td><p>Цена</p></td>
+                <td></td>
+            </tr>
+            @foreach (var c in ViewBag.Cars)
+            {
+                <tr>
+                    <td><p>@c.Name</p></td>
+                    <td><p>@c.Price</p></td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>
